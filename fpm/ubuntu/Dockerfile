@@ -10,5 +10,5 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # install packages
 RUN apt-get update
-RUN apt-get install -y build-essential ruby-dev rubygems-integration wget
+RUN apt-get install -y build-essential ruby-dev
 RUN gem install fpm
