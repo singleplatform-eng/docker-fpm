@@ -4,8 +4,13 @@ OUTPUT_DIR=`pwd`
 PYTHON_VERSION=2.7.10
 BUILD_ITERATION=1
 
-# Install dependencies
 apt-get update
+
+# Build dependencies
+apt-get install -y ruby-dev wget
+gem install fpm
+
+# Python dependencies
 apt-get install -y \
   build-essential \
   libbz2-dev \
@@ -18,8 +23,7 @@ apt-get install -y \
   libssl-dev \
   python-dev \
   tk-dev \
-  zlib1g-dev \
-  wget
+  zlib1g-dev
 
 # Build Python
 cd /tmp
