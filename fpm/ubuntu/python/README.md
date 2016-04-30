@@ -5,7 +5,7 @@ docker build -t fpm/ubuntu/python .
 ```
 
 ### Usage:
-The following will create `/Users/<username>/Downloads/python-local-<version>-<iteration>.deb` on the host machine:
+The following will create _/Users/USERNAME/Downloads/python-local-VERSION-ITERATION.deb_ on the host machine:
 ```
-docker run -v /Users/<username>/Downloads:/mnt/shared fpm/ubuntu/python
+docker run -v /Users/USERNAME/Downloads:/mnt/shared fpm/ubuntu/python
 ```
