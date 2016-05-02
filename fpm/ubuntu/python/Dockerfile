@@ -38,6 +38,7 @@ RUN cd /opt; \
       --version ${PYTHON_VERSION} \
       --iteration ${BUILD_ITERATION} \
       --package /opt/python-local-VERSION-ITERATION.deb \
+      --description "Install Python ${PYTHON_VERSION} to /usr/local/" \
       --depends libbz2-1.0 \
       --depends libc6 \
       --depends libdb5.3 \
