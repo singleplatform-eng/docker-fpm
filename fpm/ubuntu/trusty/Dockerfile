@@ -1,5 +1,4 @@
 FROM ubuntu:trusty
-MAINTAINER Colin Hoglund <colinhoglund@gmail.com>
 
 # setup environment
 RUN locale-gen en_US.UTF-8
