@@ -1,5 +1,5 @@
 ### Requirements
-- [colinhoglund/fpm:ubuntu-trusty](https://github.com/colinhoglund/dockerfiles/tree/master/fpm/ubuntu/trusty/)
+- [colinhoglund/fpm](https://github.com/colinhoglund/dockerfiles/tree/master/fpm/)
 
 ### Build
 From this directory, run:
