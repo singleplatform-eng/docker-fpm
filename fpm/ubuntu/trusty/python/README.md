@@ -8,10 +8,9 @@ docker build -t colinhoglund/fpm-python:<os>-<release> .
 ```
 
 ### Usage:
-The following will create _python-local-VERSION-ITERATION.deb_ in the host machine's current directory:
-```
-docker run -v `pwd`:/mnt/shared colinhoglund/fpm-python:ubuntu-trusty
-```
+The following will create _python-local-3.5.2-1.deb_ in the host machine's current directory:
+
+    docker run -e 'PYTHON_VERSION=3.5.2' -e 'BUILD_ITERATION=1' -v `pwd`:/mnt/shared colinhoglund/fpm-python:ubuntu-trusty
 
 ### Description
 In order to not interfere with the system version of Python, I opted to call this build of Python _python-local_. This image runs [build_python.sh](https://github.com/colinhoglund/dockerfiles/blob/master/fpm/ubuntu/trusty/python/build_python.sh), which uses fpm to build and package _python-local_. Dependencies for _python-local_ are based on the packages used to build _python-local_ and the existing Debian Python dependency tree.
