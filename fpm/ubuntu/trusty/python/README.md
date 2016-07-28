@@ -4,7 +4,7 @@
 ### Build
 From this directory, run:
 ```
-docker build -t colinhoglund/fpm-python:ubuntu-trusty .
+docker build -t colinhoglund/fpm-python:<os>-<release> .
 ```
 
 ### Usage:
