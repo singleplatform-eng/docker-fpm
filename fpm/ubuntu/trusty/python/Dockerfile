@@ -9,6 +9,7 @@ RUN apt-get update; \
       build-essential \
       libbz2-dev \
       libdb-dev \
+      libffi-dev \
       libgdbm-dev \
       liblzma-dev \
       libncursesw5-dev \
