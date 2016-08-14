@@ -1,5 +1,8 @@
 sudo: required
 
+# skip language installation steps for docker builds
+install: true
+
 services:
     - docker
 
