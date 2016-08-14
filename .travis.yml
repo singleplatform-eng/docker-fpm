@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+    - docker
+
+env:
+  # Specify which Dockerfiles to add to the build matrix
+  - TAG=ubuntu-trusty
+
+before_install:
+  # replace TAG dashes with slashes to get directory
+  - cd fpm/$(sed 's/-/\//g' <<< $TAG)
+  - docker build -t colinhoglund/fpm:$TAG .
