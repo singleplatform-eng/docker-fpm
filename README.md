@@ -2,3 +2,5 @@
 
 # docker-fpm
 Dockerfiles for building packages with [fpm](https://github.com/jordansissel/fpm)
+
+Pre-built images can be pulled from [hub.docker.com](https://hub.docker.com/r/colinhoglund/fpm/).
