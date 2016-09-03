@@ -2,7 +2,7 @@
 set -v
 
 # get all Dockerfiles that have changed
-CHANGED_IMAGES=$(git diff --name-only HEAD | grep Dockerfile)
+CHANGED_IMAGES=$(git diff --name-only HEAD^ | grep Dockerfile)
 
 for i in $CHANGED_IMAGES; do
   fullpath=$(git rev-parse --show-toplevel)/$i

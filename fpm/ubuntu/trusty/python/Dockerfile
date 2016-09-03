@@ -4,8 +4,8 @@ FROM colinhoglund/fpm:ubuntu-trusty
 VOLUME /mnt/shared
 
 # Install dependencies
-RUN apt-get update; \
-    apt-get install -y \
+RUN apt-get update \
+ && apt-get install -y \
       build-essential \
       libbz2-dev \
       libdb-dev \
