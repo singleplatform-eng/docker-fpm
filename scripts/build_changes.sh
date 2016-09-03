@@ -1,5 +1,4 @@
 #!/bin/bash
-set -v
 
 # get all Dockerfiles that have changed
 CHANGED_IMAGES=$(git diff --name-only HEAD^ | grep Dockerfile)
