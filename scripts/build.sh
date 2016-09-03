@@ -22,7 +22,7 @@ case $1 in
     ;;
   -c|--changed)
     # get all Dockerfiles that have changed since previous revision
-    IMAGES=$(git diff --name-only HEAD^ *Dockerfile)
+    IMAGES=$(git diff --diff-filter=ACMR --name-only HEAD^ *Dockerfile)
     ;;
   *)
     usage
