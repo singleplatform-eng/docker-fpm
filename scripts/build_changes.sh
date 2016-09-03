@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# get all Dockerfiles that have changed
+# get all Dockerfiles that have changed since previous revision
 CHANGED_IMAGES=$(git diff --name-only HEAD^ | grep Dockerfile)
 
 for i in $CHANGED_IMAGES; do
+  # get full path of changed images
   fullpath=$(git rev-parse --show-toplevel)/$i
+
   # replace / with - to get the docker tag value
   tag=$(dirname $i | sed 's/^fpm\///;s/\//-/g')
 
