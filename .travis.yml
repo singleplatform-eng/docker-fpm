@@ -6,4 +6,4 @@ install: true
 services:
   - docker
 
-script: ./scripts/build_changes.sh
+script: ./scripts/build.sh --changed
