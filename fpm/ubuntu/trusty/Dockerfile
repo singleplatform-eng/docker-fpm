@@ -7,7 +7,5 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
-# install packages
-RUN apt-get update
-RUN apt-get install -y build-essential ruby-dev
-RUN gem install fpm
+# install fpm
+RUN apt-get update && apt-get install -y build-essential ruby-dev && gem install fpm
