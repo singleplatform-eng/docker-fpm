@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/colinhoglund/docker-fpm.svg?branch=master)](https://travis-ci.org/colinhoglund/docker-fpm)
 
 # docker-fpm
-Use [fpm](https://github.com/jordansissel/fpm) combined with [Docker](https://www.docker.com/) to easily build various OS packages.
+Use [fpm](https://github.com/jordansissel/fpm) inside [Docker](https://www.docker.com/) containers to easily build various OS packages.
 
 Pre-built images can be pulled from [hub.docker.com](https://hub.docker.com/r/colinhoglund/fpm/).
 
