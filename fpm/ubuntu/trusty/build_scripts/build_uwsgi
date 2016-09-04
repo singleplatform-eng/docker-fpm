@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# install dependencies
+apt-get update
+apt-get install -y \
+  build-essential \
+  libcap-dev \
+  libjansson-dev \
+  libpam0g-dev \
+  libpcre3-dev \
+  libssl-dev \
+  libuuid1 \
+  libxml2-dev \
+  libyaml-dev \
+  libzmq3-dev \
+  python \
+  python-dev \
+  wget \
+  zlib1g-dev
+
+# build uwsgi
+cd /tmp
+wget http://projects.unbit.it/downloads/uwsgi-${BUILD_VERSION}.tar.gz
+tar zxvf uwsgi-${BUILD_VERSION}.tar.gz
+cd uwsgi-${BUILD_VERSION}
+python uwsgiconfig.py --build
+
+# setup package directory
+mkdir -p /tmp/uwsgi_build/usr/local/bin/
+mv uwsgi /tmp/uwsgi_build/usr/local/bin/
+
+# Create .deb package
+fpm -s dir -t deb \
+  -C /tmp/uwsgi_build/ \
+  --name uwsgi \
+  --version ${BUILD_VERSION} \
+  --iteration ${BUILD_ITERATION} \
+  --package ${BUILD_OUTPUT_DIR}/uwsgi-VERSION-ITERATION.deb \
+  --description "Install uwsgi ${BUILD_VERSION} to /usr/local/" \
+  --depends libc6 \
+  --depends libcap2 \
+  --depends libjansson4 \
+  --depends libpam0g \
+  --depends libpcre3 \
+  --depends libssl1.0.0 \
+  --depends libuuid1 \
+  --depends libxml2 \
+  --depends libyaml-0-2 \
+  --depends libzmq3 \
+  --depends zlib1g
