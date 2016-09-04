@@ -32,7 +32,7 @@ esac
 
 for i in $IMAGES; do
   # replace / with - to get the docker tag value
-  tag=$(dirname $i | sed 's/^fpm\///;s/\//-/g')
+  tag=$(dirname $i | sed 's/\//-/g')
 
   # build each newly changed Dockerfile
   echo "Building colinhoglund/fpm:${tag} image from ${i}:"
