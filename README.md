@@ -10,7 +10,7 @@ Pre-built images can be pulled from [hub.docker.com](https://hub.docker.com/r/co
 
 ## Build
 
-    docker build -t colinhoglund/fpm:<os-release> .
+    ./build.sh ubuntu/trusty/Dockerfile
 
 ## Run
 By default, running these containers executes a specified build script based on the following environment variables.
