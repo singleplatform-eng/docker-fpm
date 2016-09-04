@@ -11,7 +11,7 @@ Pre-built images can be pulled from [hub.docker.com](https://hub.docker.com/r/co
 ## Run
 By default, running these containers executes a specified build script based on the following environment variables.
 
-- `BUILD_PACKAGE`: the package being built
+- `BUILD_PACKAGE`: the package to build
 - `BUILD_VERSION`: the version of the package to build
 - `BUILD_ITERATION`: the build iteration
 
