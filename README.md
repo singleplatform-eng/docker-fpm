@@ -9,6 +9,10 @@ Pre-built images can be pulled from [hub.docker.com](https://hub.docker.com/r/co
 - [Docker](https://www.docker.com/products/overview#/install_the_platform)
 
 ## Run
+Pull an image for your preferred OS
+
+    docker pull colinhoglund/fpm:ubuntu-trusty
+
 By default, running these containers executes a specified build script based on the following environment variables.
 
 - `BUILD_PACKAGE`: the package to build
