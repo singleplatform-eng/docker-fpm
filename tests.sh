@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 GIT_CHANGES='git diff --diff-filter=ACMR --name-only HEAD^'
 
