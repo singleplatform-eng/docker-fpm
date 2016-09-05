@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# TEST_VERSIONS: 2.0.13.1
+#TEST_VERSIONS: 2.0.13.1
 
 # install dependencies
 apt-get update

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# TEST_VERSIONS: 2.7.12 3.5.2
+#TEST_VERSIONS: 2.7.12 3.5.2
 
 ### Description
 # This script uses fpm to build and package Python.
