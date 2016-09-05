@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TEST_VERSIONS: 2.7.12 3.5.2
+
 ### Description
 # This script uses fpm to build and package Python.
 # In order to not interfere with the system version of Python, I
