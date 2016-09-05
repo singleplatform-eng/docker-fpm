@@ -4,6 +4,13 @@ sudo: required
 install: true
 
 services:
-  - docker
+    - docker
 
-script: ./build.sh --changed
+env:
+    - TEST: centos/7/Dockerfile
+    - TEST: centos/7/build_scripts/build_python
+    - TEST: ubuntu/trusty/Dockerfile
+    - TEST: ubuntu/trusty/build_scripts/build_python
+    - TEST: ubuntu/trusty/build_scripts/build_uwsgi
+
+script: ./tests.sh
