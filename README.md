@@ -26,3 +26,14 @@ For Example, the following will [build python](https://github.com/colinhoglund/d
 ## Build
 
     ./build.sh ubuntu/trusty/Dockerfile
+
+## Contribute
+Reference existing Dockerfiles and build scripts to get an idea of how packaging works with docker-fpm. All new Dockerfiles/build_scripts should be included in the Travis CI configuration. Two things are needed for tests to work.
+
+Add a space delimited list of TEST_VERSIONS to the build script ([example](https://github.com/colinhoglund/docker-fpm/blob/master/ubuntu/trusty/build_scripts/build_python#L3))
+
+    # TEST_VERSIONS: 2.7.12 3.5.2
+
+Update Travis CI build matrix using the build.sh script and commit the updated .travis.yml
+
+    ./build.sh --travis
