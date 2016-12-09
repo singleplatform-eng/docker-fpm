@@ -49,11 +49,13 @@ cd Python-${BUILD_VERSION}
 mkdir /tmp/python_build
 make install DESTDIR=/tmp/python_build
 
-# Install pip/virtualenv
+# Install pip
 cd /tmp
 wget https://bootstrap.pypa.io/get-pip.py
-/tmp/python_build/usr/local/bin/python /tmp/get-pip.py
-/tmp/python_build/usr/local/bin/pip install virtualenv
+/tmp/python_build/usr/local/bin/python${BUILD_VERSION::1} /tmp/get-pip.py
+
+# Install virtualenv for python2
+[ "${BUILD_VERSION::1}" -eq 2 ] && /tmp/python_build/usr/local/bin/pip install virtualenv
 
 # Create .deb package
 fpm -s dir -t deb \
