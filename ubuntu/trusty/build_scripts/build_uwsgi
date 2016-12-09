@@ -2,6 +2,9 @@
 
 # TEST_VERSIONS: 2.0.13.1
 
+# Exit immediately when command fails
+set -ex
+
 # install dependencies
 apt-get update
 apt-get install -y \

@@ -18,6 +18,9 @@
 #   The following command will create /tmp/python-local-3.5.2-1.deb
 #     $ BUILD_VERSION=3.5.2 BUILD_ITERATION=1 BUILD_OUTPUT_DIR=/tmp build_python
 
+# Exit immediately when command fails
+set -ex
+
 # Install dependencies
 apt-get update
 apt-get install -y \
