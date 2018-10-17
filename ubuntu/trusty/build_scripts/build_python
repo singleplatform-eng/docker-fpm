@@ -18,6 +18,18 @@
 #   The following command will create /tmp/python-local-3.5.2-1.deb
 #     $ BUILD_VERSION=3.5.2 BUILD_ITERATION=1 BUILD_OUTPUT_DIR=/tmp build_python
 
+PREFIX=${BUILD_PREFIX:-"/opt/Python-${BUILD_VERSION}"}
+SHORT_VERSION=$(echo "$BUILD_VERSION" | sed -e 's:\([0-9]\+\.[0-9]\+\)\.[0-9]\+:\1:')
+INSTALLPIP=${INSTALLPIP:-"no"}
+OPTS=''
+if [ -n "${ENABLED_OPTIMIZATIONS}" ]; then
+	OPTS="--enable-optimizations"
+fi
+LIBS=${PREFIX}/lib/python${SHORT_VERSION}
+mkdir -p $LIBS
+CONFIG_ARGS="${CONFIG_ARGS:---enable-shared --prefix=$PREFIX --enable-ipv6 --with-system-expat --with-system-ffi --with-ensurepip=$INSTALLPIP} "
+CONFIG_ARGS="${CONFIG_ARGS} ${OPTS}"
+LDFLAGS="-Wl,-rpath /opt/Python-3.6.6/lib"
 # Install dependencies
 apt-get update
 apt-get install -y \
@@ -40,20 +52,30 @@ apt-get install -y \
 # Build Python
 cd /tmp
 wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz
+wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz.asc
+wget https://www.python.org/static/files/pubkeys.txt
+
+gpg --import pubkeys.txt
+gpg --verify Python-${BUILD_VERSION}.tgz.asc
+
+if [ "$?" -ne "0" ]; then
+	echo "Tar failed GPG Signature check"
+	exit 1
+fi
 tar xfv Python-${BUILD_VERSION}.tgz
 cd Python-${BUILD_VERSION}
-./configure --prefix=/usr/local; make
+./configure ${CONFIG_ARGS} LDFLAGS="${LDFLAGS}"; make
 mkdir /tmp/python_build
 make install DESTDIR=/tmp/python_build
 
 # Create .deb package
 fpm -s dir -t deb \
   -C /tmp/python_build/ \
-  --name python-local \
+  --name python${BUILD_VERSION} \
   --version ${BUILD_VERSION} \
   --iteration ${BUILD_ITERATION} \
-  --package ${BUILD_OUTPUT_DIR}/python-local-VERSION-ITERATION.deb \
-  --description "Install Python ${BUILD_VERSION} to /usr/local/" \
+  --package ${BUILD_OUTPUT_DIR}/python-VERSION-ITERATION.deb \
+  --description "Install Python ${BUILD_VERSION} to ${PREFIX}" \
   --depends libbz2-1.0 \
   --depends libc6 \
   --depends libdb5.3 \
