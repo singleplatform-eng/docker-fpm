@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# TEST_VERSIONS: 2.7.12 3.5.2
+
+### Description
+# This script uses fpm to build and package Java
+# In order to not interfere with the system version of Java
+# Required Environment Variables:
+#   - BUILD_VERSION
+#   - BUILD_ITERATION
+#   - BUILD_OUTPUT_DIR
+
+# Example Usage:
+#   The following command will create /tmp/python-local-3.5.2-1.deb
+#     $ BUILD_VERSION=3.5.2 BUILD_ITERATION=1 BUILD_OUTPUT_DIR=/tmp build_python
+
+PREFIX=${BUILD_PREFIX:-"/opt/Java-${BUILD_VERSION}"}
+apt-get update
+apt-get install -y \
+  wget
+
+cd /tmp
+wget --header "Cookie: oraclelicense=accept-securebackup-cookie"  http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jre-8u151-linux-x64.tar.gz
+mkdir -p ./${BUILD_VERSION}/${PREFIX}
+tar xvf jre-${BUILD_VERSION}-linux-x64.tar.gz -C ./${BUILD_VERSION}/${PREFIX} 
+
+fpm -s dir -t deb \
+  -C /tmp/${BUILD_VERSION}/ \
+  --name java${BUILD_VERSION} \
+  --version ${BUILD_VERSION} \
+  --iteration ${BUILD_ITERATION} \
+  --package ${BUILD_OUTPUT_DIR}/java-VERSION-ITERATION.deb \
+  --description "Install Java JDK ${BUILD_VERSION} to ${BUILD_PREFIX}" \
