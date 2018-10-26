@@ -1,4 +1,5 @@
 FROM ubuntu:bionic
+
 RUN apt-get update -y && apt-get install locales
 # setup environment
 RUN /usr/sbin/locale-gen en_US.UTF-8
