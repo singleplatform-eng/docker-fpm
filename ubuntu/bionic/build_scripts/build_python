@@ -82,7 +82,7 @@ fpm -s dir -t deb \
   --depends libexpat1 \
   --depends libffi6 \
   --depends libncursesw5 \
-  --depends libreadline6 \
+  --depends libreadline7 \
   --depends libsqlite3-0 \
   --depends libssl1.0.0 \
   --depends libtinfo5 \

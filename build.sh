@@ -78,7 +78,7 @@ for i in $IMAGES; do
   tag=$(dirname $i | sed 's/\//-/g')
 
   # build each newly changed Dockerfile
-  echo "Building colinhoglund/fpm:${tag} image from ${i}:"
+  echo "Building singleplatform-eng/fpm:${tag} image from ${i}:"
   cd $(dirname ${GIT_ROOT}/${i})
-  docker build -t colinhoglund/fpm:${tag} .
+  docker build -t singleplatform-eng/fpm:${tag} .
 done
