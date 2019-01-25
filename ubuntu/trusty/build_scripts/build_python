@@ -72,9 +72,9 @@ make install DESTDIR=/tmp/python_build
 fpm -s dir -t deb \
   -C /tmp/python_build/ \
   --name python${BUILD_VERSION} \
+  --name "python${BUILD_VERSION}-$(lsb_release -rs)" \
   --version ${BUILD_VERSION} \
   --iteration ${BUILD_ITERATION} \
-  --package ${BUILD_OUTPUT_DIR}/python-${BUILD_VERSION}-${BUILD_ITERATION}.deb \
   --description "Install Python ${BUILD_VERSION} to ${PREFIX}" \
   --depends libbz2-1.0 \
   --depends libc6 \
@@ -87,4 +87,5 @@ fpm -s dir -t deb \
   --depends libssl1.0.0 \
   --depends libtinfo5 \
   --depends mime-support \
-  --depends zlib1g
+  --depends zlib1g \
+  --package "${BUILD_OUTPUT_DIR}/python-${BUILD_VERSION}-${BUILD_ITERATION}~$(lsb_release -rs).deb" \

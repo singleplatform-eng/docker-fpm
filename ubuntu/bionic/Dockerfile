@@ -13,7 +13,7 @@ ENV BUILD_OUTPUT_DIR /mnt/shared
 
 # install fpm
 RUN apt-get update \
- && apt-get install -y build-essential ruby-dev \
+ && apt-get install -y build-essential ruby-dev lsb-release\
  && gem install fpm
 
 # define shared volume

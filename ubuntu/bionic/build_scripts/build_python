@@ -71,10 +71,10 @@ make install DESTDIR=/tmp/python_build
 # Create .deb package
 fpm -s dir -t deb \
   -C /tmp/python_build/ \
-  --name python${BUILD_VERSION} \
+  --name "python${BUILD_VERSION}-$(lsb_release -rs)" \
   --version ${BUILD_VERSION} \
   --iteration ${BUILD_ITERATION} \
-  --package ${BUILD_OUTPUT_DIR}/python-${BUILD_VERSION}-${BUILD_ITERATION}.deb \
+  --package "${BUILD_OUTPUT_DIR}/python-${BUILD_VERSION}-${BUILD_ITERATION}~$(lsb_release -rs).deb" \
   --description "Install Python ${BUILD_VERSION} to ${PREFIX}" \
   --depends libbz2-1.0 \
   --depends libc6 \
