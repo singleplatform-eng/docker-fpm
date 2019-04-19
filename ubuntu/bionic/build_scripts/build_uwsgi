@@ -2,6 +2,16 @@
 
 # TEST_VERSIONS: 2.0.13.1
 
+RAW_ARCH=$(uname -m)
+ARCH=${RAW_ARCH}
+if [ "${RAW_ARCH}" == "x86_64" ]; then
+	ARCH="amd64"
+fi
+ITERATION="0$(lsb_release -cs)${ARCH}-${BUILD_ITERATION}"
+
+if [ -n "${ENABLED_OPTIMIZATIONS}" ]; then
+	OPTS="--enable-optimizations"
+fi
 # install dependencies
 apt-get update
 apt-get install -y \
@@ -14,7 +24,7 @@ apt-get install -y \
   libuuid1 \
   libxml2-dev \
   libyaml-dev \
-  libzmq3-dev \
+  libzmq5-dev \
   python \
   python-dev \
   wget \
@@ -36,7 +46,7 @@ fpm -s dir -t deb \
   -C /tmp/uwsgi_build/ \
   --name uwsgi \
   --version ${BUILD_VERSION} \
-  --iteration ${BUILD_ITERATION} \
+  --iteration ${ITERATION} \
   --package ${BUILD_OUTPUT_DIR}/uwsgi-VERSION-ITERATION.deb \
   --description "Install uwsgi ${BUILD_VERSION} to /usr/local/" \
   --depends libc6 \
@@ -48,5 +58,5 @@ fpm -s dir -t deb \
   --depends libuuid1 \
   --depends libxml2 \
   --depends libyaml-0-2 \
-  --depends libzmq3 \
+  --depends libzmq5 \
   --depends zlib1g

@@ -22,6 +22,13 @@ PREFIX=${BUILD_PREFIX:-"/opt/Python-${BUILD_VERSION}"}
 SHORT_VERSION=$(echo "$BUILD_VERSION" | sed -e 's:\([0-9]\+\.[0-9]\+\)\.[0-9]\+:\1:')
 INSTALLPIP=${INSTALLPIP:-"no"}
 OPTS=''
+RAW_ARCH=$(uname -m)
+ARCH=${RAW_ARCH}
+if [ "${RAW_ARCH}" == "x86_64" ]; then
+	ARCH="amd64"
+fi
+ITERATION="0$(lsb_release -cs)${ARCH}-${BUILD_ITERATION}"
+
 if [ -n "${ENABLED_OPTIMIZATIONS}" ]; then
 	OPTS="--enable-optimizations"
 fi
@@ -71,10 +78,10 @@ make install DESTDIR=/tmp/python_build
 # Create .deb package
 fpm -s dir -t deb \
   -C /tmp/python_build/ \
-  --name "python${BUILD_VERSION}-$(lsb_release -rs)" \
+  --name "python${BUILD_VERSION}" \
   --version ${BUILD_VERSION} \
-  --iteration ${BUILD_ITERATION} \
-  --package "${BUILD_OUTPUT_DIR}/python-${BUILD_VERSION}-${BUILD_ITERATION}~$(lsb_release -rs).deb" \
+  --iteration ${ITERATION} \
+  --package "${BUILD_OUTPUT_DIR}/python-VERSION-ITERATION.deb" \
   --description "Install Python ${BUILD_VERSION} to ${PREFIX}" \
   --depends libbz2-1.0 \
   --depends libc6 \
