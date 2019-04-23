@@ -1,0 +1,12 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_ACCOUNT_ID: ''
+    AWS_DEFAULT_REGION: ''
+    PUBLISH: ''
+
+phases:
+  build:
+    commands:
+      - ./build.sh -a ${PUBLISH:+-p}
