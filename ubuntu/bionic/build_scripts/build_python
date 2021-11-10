@@ -60,9 +60,20 @@ apt-get install -y \
 cd /tmp
 wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz
 wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz.asc
-wget https://www.python.org/static/files/pubkeys.txt
 
-gpg --import pubkeys.txt
+# Keys now on keybase
+#wget https://www.python.org/static/files/pubkeys.txt
+#gpg --import pubkeys.txt
+
+# see https://www.python.org/downloads/
+gpg --recv-keys \
+  64E628F8D684696D \
+  FC624643487034E5 \
+  B26995E310250568 \
+  2D347EA6AA65421D \
+  FB9921286F5E1540 \
+  3A5CA953F73C700D \
+  04C367C218ADD4FF
 gpg --verify Python-${BUILD_VERSION}.tgz.asc
 
 if [ "$?" -ne "0" ]; then
