@@ -64,7 +64,10 @@ for var in $@; do
             ;;
     esac
 done
-if [ -n $IMAGES ]; then $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION); fi
+if [ -n $IMAGES ]; then 
+  aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+fi
+
 for i in $IMAGES; do
   # replace / with - to get the docker tag value
   tag=$(dirname $i | sed 's/\//-/g')
