@@ -37,26 +37,13 @@ mkdir -p $LIBS
 CONFIG_ARGS="${CONFIG_ARGS:---enable-shared --prefix=$PREFIX --enable-ipv6 --with-system-expat --with-system-ffi --with-ensurepip=$INSTALLPIP} "
 CONFIG_ARGS="${CONFIG_ARGS} ${OPTS}"
 LDFLAGS="-Wl,-rpath /opt/Python-${BUILD_VERSION}/lib"
-# Install dependencies
+
+# Download and verify python
 apt-get update
 apt-get install -y \
   build-essential \
-  libbz2-dev \
-  libdb-dev \
-  libexpat1-dev \
-  libffi-dev \
-  libgdbm-dev \
-  liblzma-dev \
-  libncursesw5-dev \
-  libreadline-dev \
-  libsqlite3-dev \
-  libssl-dev \
-  python-dev \
-  tk-dev \
-  wget \
-  zlib1g-dev
-
-# Build Python
+  wget
+  
 cd /tmp
 wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz
 wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz.asc
@@ -80,6 +67,24 @@ if [ "$?" -ne "0" ]; then
 	echo "Tar failed GPG Signature check"
 	exit 1
 fi
+
+# Install dependencies
+apt-get install -y \
+  libbz2-dev \
+  libdb-dev \
+  libexpat1-dev \
+  libffi-dev \
+  libgdbm-dev \
+  liblzma-dev \
+  libncursesw5-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  python-dev \
+  tk-dev \
+  zlib1g-dev
+
+# Build Python
 tar xfv Python-${BUILD_VERSION}.tgz
 cd Python-${BUILD_VERSION}
 ./configure ${CONFIG_ARGS} LDFLAGS="${LDFLAGS}"; make
