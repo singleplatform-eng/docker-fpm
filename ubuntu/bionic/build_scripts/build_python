@@ -53,14 +53,13 @@ wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.
 #gpg --import pubkeys.txt
 
 # see https://www.python.org/downloads/
-gpg --recv-keys \
-  64E628F8D684696D \
-  FC624643487034E5 \
-  B26995E310250568 \
-  2D347EA6AA65421D \
-  FB9921286F5E1540 \
-  3A5CA953F73C700D \
-  04C367C218ADD4FF
+gpg --fetch-keys \
+  https://keybase.io/pablogsal/pgp_keys.asc?fingerprint=a035c8c19219ba821ecea86b64e628f8d684696d \
+  https://keybase.io/stevedower/pgp_keys.asc?fingerprint=7ed10b6531d7c8e1bc296021fc624643487034e5 \
+  https://keybase.io/ambv/pgp_keys.asc?fingerprint=e3ff2839c048b25c084debe9b26995e310250568 \
+  https://keybase.io/nad/pgp_keys.asc?fingerprint=0d96df4d4110e5c43fbfb17f2d347ea6aa65421d \
+  https://keybase.io/nad/pgp_keys.asc?fingerprint=c9b104b3dd3aa72d7ccb1066fb9921286f5e1540
+
 gpg --verify Python-${BUILD_VERSION}.tgz.asc
 
 if [ "$?" -ne "0" ]; then
