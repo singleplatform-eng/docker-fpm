@@ -1,4 +1,5 @@
-FROM ubuntu:bionic
+#FROM ubuntu:bionic
+FROM public.ecr.aws/ubuntu/ubuntu:bionic
 RUN apt-get update -y && apt-get install -y locales
 # setup environment
 ENV LANG en_US.UTF-8
