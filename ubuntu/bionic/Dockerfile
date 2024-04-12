@@ -1,5 +1,5 @@
-#FROM ubuntu:bionic
-FROM public.ecr.aws/ubuntu/ubuntu:bionic
+#FROM ubuntu:jammy
+FROM public.ecr.aws/ubuntu/ubuntu:jammy
 RUN apt-get update -y && apt-get install -y locales
 # setup environment
 ENV LANG en_US.UTF-8
