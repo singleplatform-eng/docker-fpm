@@ -1,0 +1,112 @@
+#!/bin/bash
+
+# TEST_VERSIONS: 2.7.12 3.5.2
+
+### Description
+# This script uses fpm to build and package Python.
+# In order to not interfere with the system version of Python, I
+# opted to call this package 'python-local'. Dependencies for
+# python-local are based on the packages used to build python-local
+# and the existing Debian Python dependency tree.
+
+# Required Environment Variables:
+#   - BUILD_VERSION
+#   - BUILD_ITERATION
+#   - BUILD_OUTPUT_DIR
+
+# Example Usage:
+#   The following command will create /tmp/python-local-3.5.2-1.deb
+#     $ BUILD_VERSION=3.5.2 BUILD_ITERATION=1 BUILD_OUTPUT_DIR=/tmp build_python
+
+PREFIX=${BUILD_PREFIX:-"/opt/Python-${BUILD_VERSION}"}
+SHORT_VERSION=$(echo "$BUILD_VERSION" | sed -e 's:\([0-9]\+\.[0-9]\+\)\.[0-9]\+:\1:')
+INSTALLPIP=${INSTALLPIP:-"no"}
+OPTS=''
+RAW_ARCH=$(uname -m)
+ARCH=${RAW_ARCH}
+if [ "${RAW_ARCH}" == "x86_64" ]; then
+	ARCH="amd64"
+fi
+ITERATION="0$(lsb_release -cs)${ARCH}-${BUILD_ITERATION}"
+
+if [ -n "${ENABLED_OPTIMIZATIONS}" ]; then
+	OPTS="--enable-optimizations"
+fi
+LIBS=${PREFIX}/lib/python${SHORT_VERSION}
+mkdir -p $LIBS
+CONFIG_ARGS="${CONFIG_ARGS:---enable-shared --prefix=$PREFIX --enable-ipv6 --with-system-expat --with-system-ffi --with-ensurepip=$INSTALLPIP} "
+CONFIG_ARGS="${CONFIG_ARGS} ${OPTS}"
+LDFLAGS="-Wl,-rpath /opt/Python-${BUILD_VERSION}/lib"
+
+# Download and verify python
+apt-get update
+apt-get install -y \
+  build-essential \
+  wget
+  
+cd /tmp
+wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz
+wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz.asc
+
+# Keys now on keybase
+#wget https://www.python.org/static/files/pubkeys.txt
+#gpg --import pubkeys.txt
+
+# see https://www.python.org/downloads/
+gpg --fetch-keys \
+  https://keybase.io/pablogsal/pgp_keys.asc?fingerprint=a035c8c19219ba821ecea86b64e628f8d684696d \
+  https://keybase.io/stevedower/pgp_keys.asc?fingerprint=7ed10b6531d7c8e1bc296021fc624643487034e5 \
+  https://keybase.io/ambv/pgp_keys.asc?fingerprint=e3ff2839c048b25c084debe9b26995e310250568 \
+  https://keybase.io/nad/pgp_keys.asc?fingerprint=0d96df4d4110e5c43fbfb17f2d347ea6aa65421d \
+  https://keybase.io/nad/pgp_keys.asc?fingerprint=c9b104b3dd3aa72d7ccb1066fb9921286f5e1540
+
+gpg --verify Python-${BUILD_VERSION}.tgz.asc
+
+if [ "$?" -ne "0" ]; then
+	echo "Tar failed GPG Signature check"
+	exit 1
+fi
+
+# Install dependencies
+apt-get install -y \
+  libbz2-dev \
+  libdb-dev \
+  libexpat1-dev \
+  libffi-dev \
+  libgdbm-dev \
+  liblzma-dev \
+  libncursesw5-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  python-dev \
+  tk-dev \
+  zlib1g-dev
+
+# Build Python
+tar xfv Python-${BUILD_VERSION}.tgz
+cd Python-${BUILD_VERSION}
+./configure ${CONFIG_ARGS} LDFLAGS="${LDFLAGS}"; make
+mkdir /tmp/python_build
+make install DESTDIR=/tmp/python_build
+
+# Create .deb package
+fpm -s dir -t deb \
+  -C /tmp/python_build/ \
+  --name "python${BUILD_VERSION}" \
+  --version ${BUILD_VERSION} \
+  --iteration ${ITERATION} \
+  --package "${BUILD_OUTPUT_DIR}/python-VERSION-ITERATION.deb" \
+  --description "Install Python ${BUILD_VERSION} to ${PREFIX}" \
+  --depends libbz2-1.0 \
+  --depends libc6 \
+  --depends libdb5.3 \
+  --depends libexpat1 \
+  --depends libffi6 \
+  --depends libncursesw5 \
+  --depends libreadline7 \
+  --depends libsqlite3-0 \
+  --depends libssl1.0.0 \
+  --depends libtinfo5 \
+  --depends mime-support \
+  --depends zlib1g
