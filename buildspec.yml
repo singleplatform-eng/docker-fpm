@@ -2,13 +2,14 @@ version: 0.2
 
 env:
   variables:
-    AWS_ACCOUNT_ID: ''
-    AWS_DEFAULT_REGION: ''
     PUBLISH: ''
 
 phases:
+  pre_build:
+    commands:
+      - AWS_ACCOUNT_ID=${AWS_ACCOUNT_ID:-$(echo ${CODEBUILD_BUILD_ARN} | cut -f5 -d:)}
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
     commands:
-      - mkdir -p ~/.docker
-      - echo '{"credsStore":"ecr-login"}' > ~/.docker/config.json
       - ./build.sh -a ${PUBLISH:+-p}
