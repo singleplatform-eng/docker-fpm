@@ -9,4 +9,6 @@ env:
 phases:
   build:
     commands:
+      - mkdir -p ~/.docker
+      - echo '{"credsStore":"ecr-login"}' > ~/.docker/config.json
       - ./build.sh -a ${PUBLISH:+-p}
