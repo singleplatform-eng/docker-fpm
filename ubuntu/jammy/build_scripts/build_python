@@ -42,11 +42,10 @@ LDFLAGS="-Wl,-rpath /opt/Python-${BUILD_VERSION}/lib"
 apt-get update
 apt-get install -y \
   build-essential \
-  wget
+  curl
   
-cd /tmp
-wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz
-wget https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz.asc
+curl -C - -o /tmp/Python-${BUILD_VERSION}.tgz https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz
+curl -C - -o /tmp/Python-${BUILD_VERSION}.tgz.asc https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz.asc
 
 # Keys now on keybase
 #wget https://www.python.org/static/files/pubkeys.txt
@@ -83,10 +82,11 @@ apt-get install -y \
   tk-dev \
   zlib1g-dev
 
+cd /tmp
 # Build Python
 tar xfv Python-${BUILD_VERSION}.tgz
 cd Python-${BUILD_VERSION}
-./configure ${CONFIG_ARGS} LDFLAGS="${LDFLAGS}"; make
+./configure ${CONFIG_ARGS} LDFLAGS="${LDFLAGS}"; make -j8
 mkdir /tmp/python_build
 make install DESTDIR=/tmp/python_build
 

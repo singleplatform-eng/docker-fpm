@@ -11,6 +11,9 @@ ENV FPM_BUILD_SCRIPTS /opt/build_scripts
 ENV BUILD_OUTPUT_DIR /mnt/shared
 ENV PATH "$PATH:$FPM_BUILD_SCRIPTS"
 
+# install curl and awscli
+RUN apt-get install -y curl awscli
+
 # install fpm
 RUN /usr/sbin/locale-gen en_US.UTF-8 && apt-get install -y build-essential ruby-dev lsb-release && gem install fpm
 
