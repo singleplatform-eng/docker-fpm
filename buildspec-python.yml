@@ -18,3 +18,4 @@ phases:
 cache:
   paths:
     - '/tmp/**/*'
+    - '/mnt/**/*'
