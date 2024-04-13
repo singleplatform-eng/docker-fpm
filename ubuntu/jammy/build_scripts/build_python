@@ -44,8 +44,10 @@ apt-get install -y \
   build-essential \
   curl
   
-curl -C - -o /tmp/Python-${BUILD_VERSION}.tgz https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz
-curl -C - -o /tmp/Python-${BUILD_VERSION}.tgz.asc https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz.asc
+cd /tmp
+ls -lFart
+curl -C - -o Python-${BUILD_VERSION}.tgz https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz
+curl -C - -o Python-${BUILD_VERSION}.tgz.asc https://www.python.org/ftp/python/${BUILD_VERSION}/Python-${BUILD_VERSION}.tgz.asc
 
 # Keys now on keybase
 #wget https://www.python.org/static/files/pubkeys.txt
@@ -82,7 +84,6 @@ apt-get install -y \
   tk-dev \
   zlib1g-dev
 
-cd /tmp
 # Build Python
 tar xfv Python-${BUILD_VERSION}.tgz
 cd Python-${BUILD_VERSION}
