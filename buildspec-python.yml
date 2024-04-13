@@ -1,0 +1,20 @@
+version: 0.2
+
+env:
+  variables:
+     BUILD_ITERATION: '1'
+
+phases:
+  install:
+    commands:
+       - echo "installing necessary packages awscli, curl, and reprepro"
+      #- apt-get update
+       - apt-get install -y awscli
+       - apt-get install -y curl
+       - apt-get install -y reprepro
+  build:
+    commands:
+       - ./build_python.sh
+cache:
+  paths:
+    - '/tmp/**/*'
