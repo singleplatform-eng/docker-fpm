@@ -1,4 +1,4 @@
-set -x
+set -ex
 apt-get -y install reprepro
 echo "pulling encrypted gpg key from s3"
 aws s3 cp s3://sp-deploy-repo/sp_sec.gpg /tmp
